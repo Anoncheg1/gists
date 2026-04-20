@@ -1,0 +1,443 @@
+Steps:
+1) create outliner with gist description and tags containing ai block with “:gist :tangle yes” and bash block
+2) we use “:gist“ C-C C-c function for ai block, that:
+   - tangle current block
+   - Create /tmp/post with: header of current outliner, link to tangled file
+   - output to #+RESULT that file was created
+3) You manually run bash block
+
+To test tangling use: (org-babel-tangle '(4))
+
+#+begin_src elisp :lexical t :results none :exports code :eval no
+
+#+end_src
+
+* test #test [2026-03-30 Mon]
+#+begin_ai :tangle :stream nil :max-tokens 1200 :sys "Be helpful."  :service github :model "openai/gpt-4.1"
+Emacs: Jumping: How to make recenter when jumping from *Backtrace* buffer?
+```elisp
+(defun my/backtrace-jump-at-bottom-fix (&rest args)
+  (ignore args)
+  "Check if at least 8 lines visible after jumping, if not recenter."
+  (when (and (not (pos-visible-in-window-p (save-excursion
+                                        (forward-line 8)
+                                        (point))))
+             (eq (window-buffer) (current-buffer))) ; if showed
+    (print "recenter")
+    (recenter)))
+
+(advice-add 'help-function-def--button-function :after #'my/backtrace-jump-at-bottom-fix)
+```
+#+end_ai
+: -----------------------------------------------------------
+
+#+begin_ai :gist :noweb yes :tangle yes
+inside is TEST
+#+end_ai
+
+#+RESULTS:
+: Title: test [2026-03-30 Mon]
+: #test
+: file:/home/g/sources/gists/README.md
+
+
+#+begin_src bash :results output :noweb yes :tangle yes
+source ~/.bash_aliases
+cat /tmp/post | post-gist
+#+end_src
+
+#+RESULTS:
+#+begin_example
+Title: test [2026-03-30 Mon]
+Check success
+picture1=/home/g/sources/gists/README.md
+file_path=/home/g/sources/gists/README.md
+Gist Editing:
+method=POST
+{
+  "id": "041c19659c14c309313c122467080c1c",
+  "public": false,
+  "description": "test [2026-03-30 Mon] #test ",
+  "html_url": "https://gist.github.com/Anoncheg1/041c19659c14c309313c122467080c1c",
+  "owner": "Anoncheg1"
+}
+#+end_example
+
+
+
+* old
+
+#+begin_src elisp :lexical t :results none :exports code :eval no
+;; (defun org-export-current-header-to-md ()
+;;   "Export current Org header subtree to a markdown file named after the header."
+;;   (interactive)
+;;   (org-with-wide-buffer
+;;     (org-back-to-heading t)
+;;     (let* ((header (org-get-heading t t t t)) # name of headline
+;;            (filename (concat (file-name-directory (buffer-file-name))
+;;                              header ".md")))
+;;       (org-export-to-file 'md filename nil t))))
+
+;; (defun org-tangle-markdown-block-to-header-md ()
+;;   "Find current heading's markdown src block and tangle to 'header.md' in buffer's directory."
+;;   (interactive)
+;;   (org-with-wide-buffer
+;;     ;; Go to current heading
+;;     (org-back-to-heading t)
+;;     (let* ((header (org-get-heading t t t t))
+;;            (file (expand-file-name (concat header ".md")
+;;                                    (file-name-directory (buffer-file-name))))
+;;            (block-content ))
+;;       ;; Narrow to subtree for safety
+;;       (org-narrow-to-subtree)
+;;       ;; Search for markdown src block in subtree
+;;       (goto-char (point-min))
+;;       (when (re-search-forward
+;;              "#\\+begin_src +markdown\\(?:.*\\)\n\\(\\(.\\|\n\\)*?\\)#\\+end_src" nil t)
+;;         (setq block-content (match-string 1))
+;;         ;; Write to file
+;;         (with-temp-file file
+;;           (insert block-content))
+;;         (message "Tangling block to %s" file))
+;;       (widen))))
+(defun oai-gist-tangle-exec (req-type element sys-prompt sys-prompt-for-all-messages model max-tokens top-p temperature frequency-penalty presence-penalty service stream &optional info)
+"Tangle to file named as current header and execute next bash block"
+)
+#+end_src
+
+* Emacs mark sexp or outliner #emacs #outline-mode [2026-02-06 Fri]
+
+#+begin_ai :gist :noweb yes :tangle yes
+With every press of M-h key we the region of selection go up by sexp, marking wider and wider. Just as you untend.
+```elisp
+(defun my/elisp-mark-at-point ()
+  "Mark sexp and go up, mark outliner if at header."
+  (interactive)
+  (cond
+   ((use-region-p)
+   (progn
+     (deactivate-mark)
+     (condition-case _
+         (backward-up-list)
+       (scan-error nil))
+     (mark-sexp)))
+  ((and outline-regexp (outline-on-heading-p))
+      (outline-mark-subtree))
+  ((and (derived-mode-p 'prog-mode)
+        (save-excursion (let ((lb (line-beginning-position)))
+                          (beginning-of-defun)
+                          (eq lb (line-beginning-position)))))
+   ;; (mark-defun) ; sucks
+   (push-mark nil t)
+   (set-mark (progn (end-of-defun) (point)))
+   (beginning-of-defun))
+  (t
+   (mark-sexp))))
+
+(defun my/elisp-keys()
+       (keymap-local-set "M-h" #'my/elisp-mark-at-point))
+(add-hook 'emacs-lisp-mode-hook #'my/elisp-keys)
+```
+#+end_ai
+
+#+RESULTS:
+: Title: Emacs mark sexp or outliner [2026-02-06 Fri]
+: #emacs #outline-mode
+: file:/home/g/sources/gists/README.md
+
+#+begin_src bash :results output
+source ~/.bash_aliases
+cat /tmp/post | post-gist
+#+end_src
+
+#+RESULTS:
+#+begin_example
+Check success
+picture1=/home/g/sources/gists/README.md
+file_path=/home/g/sources/gists/README.md
+Gist Editing:
+method=POST
+{
+  "id": "b89c92486a8571a03a24ac4ddbe884b7",
+  "public": true,
+  "description": "Emacs mark sexp or outliner [2026-02-06 Fri] #emacs #outline ",
+  "html_url": "https://gist.github.com/Anoncheg1/b89c92486a8571a03a24ac4ddbe884b7",
+  "owner": "Anoncheg1"
+}
+#+end_example
+
+: -----------------------------------------------------------
+* Emacs: find file recursively by regex #emacs #dired [2026-04-07 Tue]
+#+begin_ai :gist :noweb yes :tangle yes
+```elisp
+(defun my/find-file-regex-recursive (regexp)
+  "Search current directory recursively for REGEXP and display relative paths in Dired."
+  (interactive "sMatching regex (in current dir): ")
+  (let* ((dir default-directory)
+         (files (directory-files-recursively dir regexp t))
+         (bufname (format "*Regex Find: %s*" regexp)))
+    (if (null files)
+        (message "No matches found for: %s" regexp)
+      (with-current-buffer (get-buffer-create bufname)
+        (let ((inhibit-read-only t))
+          (erase-buffer)
+          (setq default-directory dir)
+          ;; Buffer Header
+          (insert "  " dir ":\n")
+          (dolist (file files)
+            ;; Convert absolute path to relative path
+            (let ((rel-file (file-relative-name file dir)))
+              ;; Insert dummy 'ls -l' metadata so dired-mark works
+              (insert (format "  -rw-r--r--  1 user group 0 Jan 01 00:00 %s\n" rel-file))))
+
+          (dired-mode dir)
+          ;; Ensure Dired treats the buffer as a long-format listing
+          (setq-local dired-actual-switches "-l")
+          (setq-local dired-subdir-alist (list (cons dir (point-min-marker))))
+          (dired-goto-next-file)
+          (display-buffer (current-buffer)))))))
+```
+#+end_ai
+
+#+RESULTS:
+: Title: Emacs: find file recursively by regex [2026-04-07 Tue]
+: #emacs #dired
+: file:/home/g/sources/gists/README.md
+
+#+begin_src bash :results output
+source ~/.bash_aliases
+cat /tmp/post | post-gist
+#+end_src
+
+#+RESULTS:
+#+begin_example
+Check success
+picture1=/home/g/sources/gists/README.md
+file_path=/home/g/sources/gists/README.md
+Gist Editing:
+method=POST
+{
+  "id": "7b9a8908b762c4462e392a2eb511851b",
+  "public": true,
+  "description": "Emacs: find file recursively by regex [2026-04-07 Tue] #emacs #dired ",
+  "html_url": "https://gist.github.com/Anoncheg1/7b9a8908b762c4462e392a2eb511851b",
+  "owner": "Anoncheg1"
+}
+#+end_example
+* Emacs: converting ai web table to Org mode table #emacs #ai #gimini #orgmode #llm #aihtml #elisp #lisp [2026-04-10 Fri]
+#+begin_ai :gist :noweb yes :tangle yes
+When speaking with LLMs in web chat form it answer with markdown and with html tables.
+
+Web tables when copied is strings separate with “\t” tab character. In contrast Org mode use special
+ format for tables.
+
+Same problem with markdown and Org format for list. Following code allow to convert web answer from
+ LLM to Org mode format.
+
+I use it very frequently.
+```elisp
+(defun my/text-to-org-table (beg end)
+  "Convert lines with columns separated with tab character to Org table."
+  (interactive "r")
+  (when (region-active-p)
+    (save-excursion
+      (save-restriction
+        (narrow-to-region (1- beg) (1+ end))
+          (goto-char end)
+          (while (bolp)
+            (backward-char))
+          (setq end (point))
+          (replace-regexp-in-region "[\t]+" "|" beg end)
+          (replace-regexp-in-region "^" "|" beg end)
+          (replace-regexp-in-region "\n" "|\n" beg end)
+          (insert "|") ; at the end of the last line
+          (goto-char beg)
+          (unless (eq end (line-end-position)) ; if more than one line
+            (forward-line)
+            (insert "|-\n")
+            (goto-char beg))
+          (forward-char)))))
+
+(defun my/reformat-markdown-items-to-org-items (beg end)
+  "Replace '- **LABEL:**' with '- LABEL ::' and remove all '**' and replace ':' with '::' in selected region."
+  (interactive "r")
+  (when (region-active-p)
+    (save-excursion
+      (save-restriction
+        (narrow-to-region beg end)
+        ;; Replace '- **Label:**' with '- Label ::'
+        (replace-regexp "- \\*\\*\\([^*]+\\):\\*\\*" "- \\1 ::" nil (point-min) (point-max))))))
+
+(defun my/reformat-table-or-items (beg end)
+  "Replace '- **LABEL:**' with '- LABEL ::' and remove all '**' and replace ':' with '::' in selected region."
+  (interactive "r")
+  (when (region-active-p)
+    (if (save-excursion (goto-char beg)
+                        (or (member (org-element-type (org-element-at-point)) '(item plain-list))
+                            (re-search-forward "^- \\*\\*" end t)))
+        (my/reformat-markdown-items-to-org-items beg end)
+      ;; else
+      (if (save-excursion (goto-char beg) (re-search-forward "\t" end t))
+          (my/text-to-org-table beg end)
+        ;; else
+        (error "not a table")))))
+
+(global-set-key (kbd "C-c t") #'my/reformat-table-or-items)
+```
+#+end_ai
+
+#+RESULTS:
+: Title: Emacs: converting ai web table to Org mode table [2026-04-10 Fri]
+: #emacs #ai #gimini #orgmode #llm #aihtml #elisp #lisp
+: file:/home/g/sources/gists/README.md
+
+#+begin_src bash :results output
+source ~/.bash_aliases
+cat /tmp/post | post-gist
+#+end_src
+
+#+RESULTS:
+#+begin_example
+Check success
+picture1=/home/g/sources/gists/README.md
+file_path=/home/g/sources/gists/README.md
+Gist Editing:
+method=POST
+{
+  "id": "6ab37417bdabe916fa6bb60d3e104c4b",
+  "public": true,
+  "description": "Emacs: converting ai web table to Org mode table [2026-04-10 Fri] #emacs #ai #gimini #orgmode #llm #aihtml #elisp #lisp ",
+  "html_url": "https://gist.github.com/Anoncheg1/6ab37417bdabe916fa6bb60d3e104c4b",
+  "owner": "Anoncheg1"
+}
+#+end_example
+
+* Bash: split multiline file/string to chunks by new line #llm #bash #shell [2026-04-16 Thu]
+#+begin_ai :gist :noweb yes :tangle yes
+```bash
+split_and_buffer() {
+  # Split multiline strint to chunks of specified size by breaking line
+  # Usage: split_and_buffer 40 my_chunks < /tmp/post ; echo "size: ${#my_chunks[@]}"
+  local limit=$1
+    local result_arr_var="$2"
+    local current_buffer=""
+    local -a result=()
+    while IFS= read -r line || [[ -n "$line" ]]; do
+        if (( ${#current_buffer} + ${#line} + 1 > limit )); then
+            [[ -n "$current_buffer" ]] && result+=("$current_buffer")
+            current_buffer="$line"
+        else
+            if [[ -z "$current_buffer" ]]; then
+                current_buffer="$line"
+            else
+                current_buffer+=$'\n'"$line"
+            fi
+        fi
+    done
+    [[ -n "$current_buffer" ]] && result+=("$current_buffer")
+
+    # This assignment only persists if the function isn't isolated in a pipe subshell
+    eval "$result_arr_var=(\"\${result[@]}\")"
+    # for i in "${!result[@]}"; do
+    #     echo "--- Element $i ---"
+    #     echo "${result[$i]}"
+    # done
+}
+```
+#+end_ai
+
+#+RESULTS:
+: Title: Bash: split multiline file/string to chunks by new line [2026-04-16 Thu]
+: #llm #bash #shell
+: file:/home/g/sources/gists/README.md
+
+#+begin_src bash :results output
+source ~/.bash_aliases
+cat /tmp/post | post-gist
+#+end_src
+
+#+RESULTS:
+#+begin_example
+Check success
+picture1=/home/g/sources/gists/README.md
+file_path=/home/g/sources/gists/README.md
+Gist Editing:
+method=POST
+{
+  "id": "9290cafe14dca111e5e5205b48750865",
+  "public": true,
+  "description": "Bash: split multiline file/string to chunks by new line [2026-04-16 Thu] #llm #bash #shell ",
+  "html_url": "https://gist.github.com/Anoncheg1/9290cafe14dca111e5e5205b48750865",
+  "owner": "Anoncheg1"
+}
+#+end_example
+
+* Bash: Simple logs reader #bash #shell #monitoring #logs #security #root [2026-04-20 Mon]
+#+begin_ai :gist :noweb yes :tangle yes
+```bash
+#!/bin/bash
+# Usage: bash log.sh
+# OR: cat /var/log/messages | bash log.sh
+
+set -euo pipefail
+
+# Configuration
+filters=("wpa_supplicant" "ACPI Warning" "pulseaudio") # Add your full list here
+exclude_regex=$(printf "|%s" "${filters[@]}")
+exclude_regex=${exclude_regex:1}
+
+files=( /var/log/syslog /var/log/messages )
+
+process() {
+    # Clean input, filter, then colorize.
+    tr -cd '\11\12\15\40-\176' | \
+    grep -aEi "warn|error|crit|fatal" | \
+    grep -avE "$exclude_regex" | \
+    sort -u | \
+    grep --color=always -Ei "warn|error|crit|fatal|$" || true
+}
+
+for file in "${files[@]}"; do
+    if [[ -f "$file" && -r "$file" ]]; then
+        tail -n 2000 "$file" 2>/dev/null | sed "s|^|$file: |" | process
+    fi
+done
+```
+#+end_ai
+
+#+RESULTS:
+: Title: Bash: Simple logs reader [2026-04-20 Mon]
+: #bash #shell #monitoring #logs #security #root
+: file:/home/g/sources/gists/README.md
+
+#+begin_src bash :results output
+source ~/.bash_aliases
+cat /tmp/post | post-gist
+#+end_src
+
+#+RESULTS:
+#+begin_example
+Check success
+picture1=/home/g/sources/gists/README.md
+file_path=/home/g/sources/gists/README.md
+Gist Editing:
+method=POST
+{
+  "id": "15793870f83571beb67b9cf59c6a4169",
+  "public": true,
+  "description": "Bash: Simple logs reader [2026-04-20 Mon] #bash #shell #monitoring #logs #security #root ",
+  "html_url": "https://gist.github.com/Anoncheg1/15793870f83571beb67b9cf59c6a4169",
+  "owner": "Anoncheg1"
+}
+#+end_example
+
+* TODO Resume, cv in HTML template #vacancies #jobsearch #jobs #html #resume [2026-04-20 Mon]
+#+begin_ai :gist :noweb yes :tangle yes
+
+#+end_ai
+
+#+begin_src bash :results output
+source ~/.bash_aliases
+cat /tmp/post | post-gist
+#+end_src
+* end
