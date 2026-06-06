@@ -431,13 +431,426 @@ method=POST
 }
 #+end_example
 
-* TODO Resume, cv in HTML template #vacancies #jobsearch #jobs #html #resume [2026-04-20 Mon]
+* Resume, cv in HTML template #vacancies #jobsearch #jobs #html #resume [2026-04-20 Mon]
 #+begin_ai :gist :noweb yes :tangle yes
+It is easy to edit, it is small and easy to edit with LLM.
+You can convert HTML file to PDF with in Firefox browser.
+![screenshot-of-pdf](https://codeberg.org/Anoncheg/public-share/raw/branch/main/template-cv-html.png)
+```html
+<!-- -*- mode: mhtml; fill-column: 220; coding: utf-8; -*- -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!--<title>Resume Template</title> -->
+  <style>
+    @page {
+      size: A4;
+      margin: 1.4cm;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+      line-height: 1.2;
+      color: #222;
+      max-width: 21cm;
+      margin: 0;
+      background: #fff;
+    }
 
+    /* first two lines */
+    .header {
+        text-align: center;
+        margin-bottom: 0.18em;
+        font-size: 1.2em;
+        letter-spacing: 0.1px;
+    }
+
+    .header .name {
+        font-size: 1.20em;
+        font-weight: 700;
+        color: #222;
+        margin-right: 0.5em;
+        vertical-align: middle;
+    }
+
+    .header .roles {
+        font-size: 1.20em;
+        font-weight: 520;
+        color: #2867B2; /* Professional blue for roles */
+        background-color: #D0ffff;
+        letter-spacing: 0.5px;
+        vertical-align: middle;
+    }
+
+    .header h1 {
+        font-size: 1.5em;
+        font-weight: 700;
+        color: #222;
+        margin: 0;
+    }
+
+    .header h2 {
+        font-size: 1.05em;
+        color: #2867B2;
+        font-weight: 500;
+        margin: 0.2em 0 0 0;
+    }
+
+    .header .contacts {
+        font-size: 1em;
+        color: #444;
+        margin-top: 0.3em;
+        display: flex;
+        justify-content: center;
+        gap: 1.5em;
+        flex-wrap: wrap;
+    }
+
+    .contacts .whatsapp {
+        /* color: #25D366; */
+        /* font-weight: 600; */
+    }
+
+    .contacts .email {
+        color: #0a66c2;
+        text-decoration: underline;
+    }
+
+    .contacts .linkedin {
+        color: #2867B2;
+        font-weight: 600;
+        text-decoration: underline;
+    }
+
+    .contacts .contact-icon {
+        height: 16px;
+        width: 16px;
+        vertical-align: text-bottom;
+        margin-right: 0.25em;
+    }
+
+    /* body */
+    h1, h2 {
+      text-align: center;
+      margin-bottom: 0.18em;
+    }
+    h1 { font-size: 1.6em; }
+    h2 { font-size: 1em; color: #555; font-weight: 400;}
+    h3 { text-decoration:underline;}
+    .main-section {
+      margin-bottom: 1em;
+      page-break-inside: avoid;
+    }
+    .subsection {
+      margin-bottom: 0.6em;
+      margin-top: 0.6em;
+      page-break-inside: avoid;
+    }
+    .subsection-title {
+      margin-top: 0.6em;
+      font-weight: bold;
+      font-size: 1em;
+      margin-bottom: 0.12em;
+    }
+    p {
+      margin: 0.1em 1em 0.15em 1.3em;
+      padding: 0;
+    }
+    li {
+      margin-bottom: 0.1em; padding-left: 1em;
+    }
+  </style>
+</head>
+<body>
+ <div class="header">
+  <span class="name">Your name</span>
+  <span class="roles">Role1 – Role2 – Role3 – role4</span>
+  <div class="contacts">
+    <span class="linkedin">
+      <img class="contact-icon" alt="Telegram" src="/home/ff/Downloads/linkedin.png"> <!-- https://static.licdn.com/sc/h/413gphjmquu9edbn2negq413a -->
+      <a href="https://www.linkedin.com/in/you/" target="_blank">linkedin.com/in/you/</a>
+    </span>
+    <span class="whatsapp">
+      <img class="contact-icon" alt="WhatsApp" src="/home/ff/Downloads/whatsapp.png"> <!-- https://static.whatsapp.net/rsrc.php/v4/yz/r/ujTY9i_Jhs1.png -->
+      +2 22 222 22 (code)
+    </span>
+    <span class="telegram">
+      <img class="contact-icon" alt="Telegram" src="/home/ff/Downloads/telegram.svg"> <!-- https://core.telegram.org/img/website_icon.svg -->
+      <a href="https://t.me/you" target="_blank">t.me/you</a>
+    </span>
+    <span class="email"><a href="mailto:you@what.com">you@what.com</a></span>
+  </div>
+ </div>
+
+  <!-- Section 1 -->
+<section class="main-section">
+  <h3>SKILLS:</h3>
+  <div class="subsection-title">XXXX XXXX XXXX XXXX XXXX XXXX XXXX XXXX</div>
+  <div class="subsection">
+    <p>XXXX XXXX: XXXX, XXXX, XXXX.</p>
+    <p>XXXX, XXXX, XXXX XXXX, XXXX XXXX, XXXX, XXXX, XXXX.</p>
+    <p>XXXX XXXX-XXXX, XXXX, XXXX, XXXX-XXXX, XXXX, XXXX, XXXX, XXXX, XXXX.</p>
+    <p>XXXX, XXXX XXXX, XXXX XXXX.</p>
+    <p>XXXX XXXX, XXXX, XXXX, XXXX.</p>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">XXXX XXXX</div>
+    <div class="subsection">
+      <p>XXXX, XXXX, XXXX, XXXX, XXXX, XXXX, XXXX, XXXX.</p>
+      <p>XXXX, XXXX, XXXX-XXXX, XXXX-XXXX, XXXX XXXX XXXX XXXX XXXX XXXX.</p>
+      <p>XXXX, XXXX, XXXX, XXXX, XXXX XXXX, XXXX XXXX.</p>
+      <p>XXXX XXXX, XXXX XXXX, XXXX XXXX, XXXX XXXX XXXX.</p>
+      <p>XXXX, XXXX, XXXX, XXXX-XXXX XXXX, XXXX.</p>
+    </div>
+  </div>
+
+  <div class="subsection-title">XXXX XXXX</div>
+  <div class="subsection">
+    <p>XXXX, XXXX, XXXX, XXXX XXXX, XXXX.</p>
+    <p>XXXX XXXX, XXXX, XXXX-XXXX, XXXX XXXX.</p>
+    <p>XXXX-XXX, XXXX, XXXX XXXX, XXXX XX XXXX, XXXX XX XXXX, XXXX/XXX XXXX.</p>
+    <p>XXXX XXXX XXXX XXXX, XXXX XXXX XXXX.</p>
+  </div>
+
+  <div class="subsection-title">XXXX XXXX</div>
+  <div class="subsection">
+    <p>XXXX: XXXX, XXXX, XXXX, XXXX.</p>
+    <p>XXXX XXXX: XXXX, XXXX, XXXX, XXXX.</p>
+    <p>XXXX XXXX XXXX XXXX XXXX XXXX.</p>
+    <p>XXXX XXXX, XXXX; XXXX XXXX XXXX.</p>
+  </div>
+
+  <div class="subsection-title">XXXX XXXX</div>
+  <div class="subsection">
+    <li>XXXX XXXX XXXX, XXXX, XXXX XXXX, XXXX, XXXX, XXXX.</li>
+    <li>XXXX XXXX XXXX.</li>
+  </div>
+</section>
+
+<!-- Section 2 -->
+<section class="main-section">
+  <h3>EDUCATION:</h3>
+  <div class="subsection-title">XXXX XXXX XXXX XXXX XXXX XXXX XXXX XXXX</div>
+  <div class="subsection">
+    <p><strong>XXXX:</strong> XXXX (XXXX XX XXXX&#96;X XXXX).</p>
+    <p><strong>XXXX:</strong> XXXX-XXXX.</p>
+    <p><strong>XXXX:</strong>XXXX XXXX XXXX XXXX.</p>
+    <p><strong>XXXX XXXX:</strong> "XXXX XXXX" XXXX. (XXXX XXXX XXXX XXXX).</p>
+  </div>
+</section>
+
+
+<!-- Section 3 -->
+  <section class="main-section">
+    <h3>WORK EXPERIENCE:</h3>
+
+    <div class="subsection">
+      <div class="subsection-title">XXXX XXXX (XXXX) - XXXX XXXX </div>
+      <ul>
+        <li>XXXX XXXX XXXX XXXX</li>
+        <li>XXXX XXXX, XXXX XXXX, XXXX XXXX XXXX XXXX, XXXX XXXX XXXX XXXX.</li>
+        <li>XXXX, XXXX, XXXX XXXX, XXXX, XXXX XXXX + XXXX XXXX XXXX.</li>
+      </ul>
+    </div>
+    <div class="subsection">
+      <div class="subsection-title">XXXX XXXX XXXX (XXXX) - XXXX XXXX</div>
+      <ul>
+        <li>XXXX XXXX XXXX XXXX XXXX (XXXX XXXX) XXXX XXXX (XXXX).</li>
+        <li>XXXX XXXX XXXX-XXXX.</li>
+      </ul>
+    </div>
+    <div class="subsection">
+      <div class="subsection-title">XXXX XXXX (XXXX) - XXXX XXXX</div>
+      <ul>
+        <li>XXXX XXXX, XXXX XXXX XXXX XXXX.</li>
+        <li>XXXX XXXX, XXXX XXXX, XXXX XXXX.</li>
+        <li>XXXX XXXX XXXX XXXX XXXX XXXX, XXXX XXXX XXXX XXXX.</li>
+      </ul>
+    </div>
+    <div class="subsection">
+      <div class="subsection-title">XXXX XXXX XXXX XXXX (XXXX) - XXXX XXXX</div>
+      <ul>
+        <li>XXXX XXXX XXXX XXXX XXXX XXXX</li>
+        <li>XXXX XXXX XXXX XXXX XXXX XXXX XXXX XXXX XXXX XXXX XXXX XXXX.</li>
+      </ul>
+    </div>
+  </section>
+
+</body>
+</html>
+```
 #+end_ai
+
+#+RESULTS:
+: Title: Resume, cv in HTML template [2026-04-20 Mon]
+: #vacancies #jobsearch #jobs #html #resume
+: file:/home/g/sources/gists/README.md
 
 #+begin_src bash :results output
 source ~/.bash_aliases
 cat /tmp/post | post-gist
 #+end_src
+
+#+RESULTS:
+#+begin_example
+Check success
+picture1=/home/g/sources/gists/README.md
+file_path=/home/g/sources/gists/README.md
+Gist Editing:
+method=POST
+{
+  "id": "417b96d3055ff2a04ff4c2e67e12ac1e",
+  "public": true,
+  "description": "Resume, cv in HTML template [2026-04-20 Mon] #vacancies #jobsearch #jobs #html #resume ",
+  "html_url": "https://gist.github.com/Anoncheg1/417b96d3055ff2a04ff4c2e67e12ac1e",
+  "owner": "Anoncheg1"
+}
+#+end_example
+
+* AI Agent plan #aiagent #aiengineering [2026-05-16 Sat]
+#+begin_ai :gist :noweb yes :tangle yes
+from https://arxiv.org/html/2407.11511v3
+
+We see here two cycles short and long, two types of memory.
+![Original image](https://raw.githubusercontent.com/Anoncheg1/public-share/main/agent-plan.png)
+
+```code
+                             *Agent*
+                     +-----------------------+
+ External feedback   |                       |        Reflective
+  --------------+--->>  Self-Reflection (LM) +--------   text
+  |             |    |                       |       |
+  |    Internal |    +-----------------------+       |
+  |    feedback |                                    |
+  |             |                                    V
+  |       +-----+-------------+            +---------V---------+
+  |       |   Evaluator (LM)  |            |  Experience       |
+  |       +-----^-------------+            |  (leng-term       |
+  |             ^                          |           memory) |
+  |             |                          +---------+---------+
+  |       +-----+-------------+                      |
+  |       |  Trajectory       |                      V
+  +------->  (short-term      |            +---------v---------+
+  |       |          memory)  +----------->>     Actor (LM)    +------
+  |       +-------------------+            +-------------------+     |
+  |                                                                  |
+  |                                                                  |
+  |                                                                  |
+  |                                                                  |
+  |                  +-----------------------+                       |
+  |                  |      Environment      |                       |
+  +-- Obs/Reward ----+                       <<------- Action --------
+                     +-----------------------+
+```
+#+end_ai
+
+#+RESULTS:
+: Title: AI Agent plan [2026-05-16 Sat]
+: #aiagent #aiengineering
+: file:/home/g/sources/gists/README.md
+
+#+begin_src bash :results output
+source ~/.bash_aliases
+cat /tmp/post | post-gist
+#+end_src
+
+#+RESULTS:
+#+begin_example
+Check success
+picture1=/home/g/sources/gists/README.md
+file_path=/home/g/sources/gists/README.md
+Gist Editing:
+method=POST
+{
+  "id": "43a1df36095f83450beaea0ee02bb5f5",
+  "public": true,
+  "description": "AI Agent plan [2026-05-16 Sat] #aiagent #aiengineering ",
+  "html_url": "https://gist.github.com/Anoncheg1/43a1df36095f83450beaea0ee02bb5f5",
+  "owner": "Anoncheg1"
+}
+#+end_example
+
+* Emacs: Buffer: How to switch buffers fast with one key? #emacs [2026-06-06 Sat]
+#+begin_ai :gist :noweb yes :tangle yes
+- "C-c C-z" - to previous buffer
+- "C-c C-d" - to previous previous buffer
+```lisp
+(defvar my/ignored-system-buffers '("*Buffer List*")
+  "List of buffer names to ignore when looping through window history.")
+
+(defun my/find-buffer-predicate (b)
+  "Return non-nil if buffer B is a valid target buffer."
+  (and (buffer-live-p b)
+       (/= (aref (buffer-name b) 0) ?\s) ; Not hidden system buffers
+       (with-current-buffer b (not (derived-mode-p 'dired-mode))) ; Not Dired
+       (not (member (buffer-name b) my/ignored-system-buffers)))) ; Not ignored
+
+(defun my/loop-over-window-history (&optional skip-count)
+  "Loop through the buffer history of the currently selected window.
+Optional argument SKIP-COUNT specifies how many valid buffers to skip
+past the current buffer. If nil, it goes to the immediate previous valid buffer."
+  (interactive "p") ; skip-count=1 in interactive call
+  (let* ((current-buf (current-buffer))
+         (history (window-prev-buffers (selected-window)))
+         ;; Filter history: must pass your predicate AND not be the current buffer
+         (live-buffers (delq nil (mapcar (lambda (entry)
+                                           (let ((buf (car entry)))
+                                             (when (and (my/find-buffer-predicate buf)
+                                                        (not (eq buf current-buf)))
+                                               buf)))
+                                         history)))
+         (skip (if skip-count (1- skip-count) 0))
+         (target-buffer (nth skip live-buffers)))
+
+    (cond
+     ((null history)
+      (message "This window has no buffer history yet!"))
+     ((null target-buffer)
+      (message "No valid buffer found in history at skip index %d." skip))
+     (t
+      ;; Switch buffer without altering the history order dynamically
+      (switch-to-buffer target-buffer nil t)
+      (message "Switched to: %s" (buffer-name target-buffer))))))
+
+(defun my/loop-over-window-history2 ()
+  (interactive)
+  (my/loop-over-window-history 2))
+
+(global-set-key (kbd "C-c C-z") #'my/loop-over-window-history)
+(require 'org)
+(keymap-unset org-mode-map "C-c C-d")
+(global-set-key (kbd "C-c C-d") #'my/loop-over-window-history2) ; with argument
+```
+#+end_ai
+
+#+RESULTS:
+: Title: Emacs: Buffer: How to switch buffers fast with one key? [2026-06-06 Sat]
+: #emacs
+: file:/home/g/sources/gists/README.md
+
+#+begin_src bash :results output
+source ~/.bash_aliases
+cat /tmp/post | post-gist
+#+end_src
+
+#+RESULTS:
+#+begin_example
+Check success
+picture1=/home/g/sources/gists/README.md
+file_path=/home/g/sources/gists/README.md
+Gist Editing:
+method=POST
+{
+  "id": "59454d5a30960a1de15ae4adcdb8b0bf",
+  "public": true,
+  "description": "Emacs: Buffer: How to switch buffers fast with one key? [2026-06-06 Sat] #emacs ",
+  "html_url": "https://gist.github.com/Anoncheg1/59454d5a30960a1de15ae4adcdb8b0bf",
+  "owner": "Anoncheg1"
+}
+#+end_example
+
+
+
 * end
